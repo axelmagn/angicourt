@@ -1,7 +1,7 @@
 extern crate find_folder;
-extern crate nalgebra as na;
 extern crate piston;
 extern crate piston_window;
+extern crate rand;
 
 mod event_traits;
 mod rect;
@@ -32,6 +32,16 @@ fn main() {
         ).unwrap();
     let stone_tile = Rc::new(stone_tile);
 
+    let stone_tile2 = assets.join("Isometric").join("stoneTile_E.png");
+    let stone_tile2 = Texture::from_path(
+        &mut window.factory,
+        &stone_tile2,
+        Flip::None,
+        &TextureSettings::new()
+        ).unwrap();
+    let stone_tile2 = Rc::new(stone_tile2);
+
+
     let r = rect::GameRect {
         x: 100.0,
         y: 100.0,
@@ -41,8 +51,23 @@ fn main() {
     };
 
     let s = simple_map::SimpleSprite {
-        pos: [100.0, 100.0],
         texture: stone_tile.clone(),
+        pos: [0.0, 0.0],
+    };
+    let s = Rc::new(s);
+
+    let s2 = simple_map::SimpleSprite {
+        texture: stone_tile2.clone(),
+        pos: [0.0, 0.0],
+    };
+    let s2 = Rc::new(s2);
+
+    let m = simple_map::SimpleMap {
+        sprites: vec!(s.clone(), s2.clone()),
+        seed: 42,
+        pos: [512.0, 512.0],
+        width: 10,
+        height: 10,
     };
 
     while let Some(e) = window.next() {
@@ -51,7 +76,7 @@ fn main() {
                 window.draw_2d(&e, |c, g| {
                     clear([0.5, 0.5, 0.5, 1.0], g);
                     r.render(args, c, g);
-                    s.render(args, c, g);
+                    m.render(args, c, g);
                 });
             }
             _ => {}

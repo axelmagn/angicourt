@@ -6,5 +6,5 @@ authors = ["Axel Magnuson <axelmagn@gmail.com>"]
 [dependencies]
 piston = "0.31.3"
 piston_window = "0.64.0"
-nalgebra = "0.11"
 find_folder = "0.3.0"
+rand = "0.3"

@@ -3,7 +3,7 @@ use piston_window::G2d;
 use piston_window::{RenderArgs, UpdateArgs};
 use piston_window::rectangle;
 
-use event_traits::{RenderHandler, RenderResult};
+use engine::event_traits::{RenderHandler, RenderResult};
 
 pub struct GameRect {
     pub x: f64,

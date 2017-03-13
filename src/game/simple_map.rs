@@ -8,7 +8,7 @@ use std::rc::Rc;
 use std::cmp::{Ord, Ordering};
 use rand::{thread_rng, Rng, SeedableRng, StdRng};
 
-use event_traits::{RenderHandler, RenderResult};
+use engine::event_traits::{RenderHandler, RenderResult};
 
 
 pub struct SimpleSprite {

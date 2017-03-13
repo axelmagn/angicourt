@@ -3,12 +3,11 @@ extern crate piston;
 extern crate piston_window;
 extern crate rand;
 
-mod event_traits;
-mod rect;
-mod simple_map;
+mod game;
+mod engine;
 
 use piston_window::*;
-use event_traits::RenderHandler;
+use engine::event_traits::RenderHandler;
 use std::rc::Rc;
 
 fn main() {
@@ -42,7 +41,7 @@ fn main() {
     let stone_tile2 = Rc::new(stone_tile2);
 
 
-    let r = rect::GameRect {
+    let r = game::rect::GameRect {
         x: 100.0,
         y: 100.0,
         w: 100.0,
@@ -50,19 +49,19 @@ fn main() {
         color: [1.0, 0.0, 0.0, 1.0],
     };
 
-    let s = simple_map::SimpleSprite {
+    let s = game::simple_map::SimpleSprite {
         texture: stone_tile.clone(),
         pos: [0.0, 0.0],
     };
     let s = Rc::new(s);
 
-    let s2 = simple_map::SimpleSprite {
+    let s2 = game::simple_map::SimpleSprite {
         texture: stone_tile2.clone(),
         pos: [0.0, 0.0],
     };
     let s2 = Rc::new(s2);
 
-    let m = simple_map::SimpleMap {
+    let m = game::simple_map::SimpleMap {
         sprites: vec!(s.clone(), s2.clone()),
         seed: 42,
         pos: [512.0, 512.0],

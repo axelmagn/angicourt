@@ -1,12 +1,12 @@
 //! A simple sprite (not meant as a final product)
 
 use piston_window::context::Context;
-use piston_window::math::{Vec2d, translate, multiply};
+use piston_window::math::Vec2d;
 use piston_window::{G2d, G2dTexture, image, RenderArgs, Transformed};
 use std::collections::BinaryHeap;
 use std::rc::Rc;
 use std::cmp::{Ord, Ordering};
-use rand::{thread_rng, Rng, SeedableRng, StdRng};
+use rand::{Rng, SeedableRng, StdRng};
 
 use engine::event_traits::{RenderHandler, RenderResult};
 
@@ -18,7 +18,7 @@ pub struct SimpleSprite {
 
 
 impl RenderHandler for SimpleSprite {
-    fn render(&self, args: RenderArgs, context: Context, graphics: &mut G2d) -> RenderResult {
+    fn render(&self, _: RenderArgs, context: Context, graphics: &mut G2d) -> RenderResult {
         let tex: &G2dTexture = &self.texture;
         let c = context.trans(self.pos[0], self.pos[1]);
         image(tex, c.transform, graphics);
@@ -86,13 +86,19 @@ impl RenderHandler for SimpleMap {
 
         let seed: &[_] = &[self.seed];
         let mut rng: StdRng = SeedableRng::from_seed(seed);
-        // let mut rng = thread_rng();
         let c = context.trans(self.pos[0], self.pos[1]);
+        let mut changed = false;
         while let Some(job) = render_queue.pop() {
             let c = c.trans(job.dx as f64, job.dy as f64);
             let i = rng.gen_range(0, self.sprites.len());
-            self.sprites[i].render(args, c, graphics);
+            let result = self.sprites[i].render(args, c, graphics);
+            match result {
+                Ok(x) => changed = changed || x,
+                Err(_) => {
+                    return Err(());
+                }
+            };
         }
-        Ok(true)
+        Ok(changed)
     }
 }

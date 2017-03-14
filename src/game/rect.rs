@@ -1,6 +1,6 @@
 use piston_window::context::Context;
 use piston_window::G2d;
-use piston_window::{RenderArgs, UpdateArgs};
+use piston_window::RenderArgs;
 use piston_window::rectangle;
 
 use engine::event_traits::{RenderHandler, RenderResult};
@@ -14,7 +14,7 @@ pub struct GameRect {
 }
 
 impl RenderHandler for GameRect {
-    fn render(&self, args: RenderArgs, context: Context, graphics: &mut G2d) -> RenderResult {
+    fn render(&self, _: RenderArgs, context: Context, graphics: &mut G2d) -> RenderResult {
         rectangle(self.color,
                   [self.x, self.y, self.w, self.h],
                   context.transform,

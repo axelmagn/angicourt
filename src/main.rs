@@ -74,8 +74,10 @@ fn main() {
             Input::Render(args) => {
                 window.draw_2d(&e, |c, g| {
                     clear([0.5, 0.5, 0.5, 1.0], g);
-                    r.render(args, c, g);
-                    m.render(args, c, g);
+                    Ok(())
+                        .and_then(|_| r.render(args, c, g))
+                        .and_then(|_| m.render(args, c, g))
+                        .unwrap();
                 });
             }
             _ => {}

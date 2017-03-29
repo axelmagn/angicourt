@@ -2,6 +2,7 @@ extern crate find_folder;
 extern crate piston;
 extern crate piston_window;
 extern crate rand;
+extern crate specs;
 
 mod game;
 mod engine;
